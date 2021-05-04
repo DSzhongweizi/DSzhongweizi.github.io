@@ -10,14 +10,13 @@ npm run build
 cd dist
 
 echo 'www.dengsong.icu' >> CNAME
-echo "个人博客：http://blog.dengsong.icu" >> README.md
+echo "访问它：http://www.dengsong.icu" >> README.md
 
 git init
 git add .
 git commit -m "deploy"
 git branch -M main
 git remote add origin git@github.com:DSzhongweizi/DSzhongweizi.github.io.git
-git pull origin main --allow-unrelated-histories
-git push -u origin main
+git push -f origin main
 
 cd -
