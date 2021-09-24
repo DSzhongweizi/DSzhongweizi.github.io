@@ -20,11 +20,11 @@ import { useStore } from "vuex";
 const store = useStore();
 const menus = reactive([
   {
-    path: "home",
+    path: "/home",
     title: "首页",
   },
   {
-    path: "front-end-dev",
+    path: "/front-end-dev",
     title: "前端开发",
     children: [
       {
@@ -42,7 +42,7 @@ const menus = reactive([
     ],
   },
   {
-    path: "back-end-dev",
+    path: "/back-end-dev",
     title: "后端开发",
     children: [
       {
@@ -52,7 +52,7 @@ const menus = reactive([
     ],
   },
   {
-    path: "science-garden",
+    path: "/science-garden",
     title: "科学园地",
     children: [
       {
@@ -70,7 +70,7 @@ const menus = reactive([
     ],
   },
   {
-    path: "history-world",
+    path: "/history-world",
     title: "文史天地",
     children: [
       {
