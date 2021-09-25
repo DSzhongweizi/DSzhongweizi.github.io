@@ -5,6 +5,7 @@ export default createStore({
   },
   mutations: {
     setAsideMenu(state, data) {
+      console.log(data);
       state.asideMenu = data;
     },
   },

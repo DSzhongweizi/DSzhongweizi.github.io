@@ -1,7 +1,7 @@
 <template>
   <el-header>
     <img src="/logo.png" class="logo" @click="$router.push('/')" />
-    <el-menu default-active="home" mode="horizontal" @select="handleMenuSelect">
+    <el-menu :default-active="currentActiveRoute" mode="horizontal">
       <el-menu-item
         v-for="menu in menus"
         :key="menu.path"
@@ -15,9 +15,12 @@
 
 <script setup lang="ts">
 import { ElHeader, ElMenu, ElMenuItem } from "element-plus";
-import { reactive } from "@vue/runtime-core";
+import { ref, reactive, watchEffect } from "@vue/runtime-core";
 import { useStore } from "vuex";
+import { useRoute } from "vue-router";
 const store = useStore();
+const route = useRoute();
+const currentActiveRoute = ref("home");
 const menus = reactive([
   {
     path: "/home",
@@ -85,8 +88,13 @@ const menus = reactive([
   },
 ]);
 
-const handleMenuSelect = (key: string) =>
-  store.commit("setAsideMenu", menus.find((cur) => cur.path == key)?.children);
+watchEffect(() => {
+  currentActiveRoute.value = route.path;
+  store.commit(
+    "setAsideMenu",
+    menus.find((cur) => cur.path == route.path)?.children
+  );
+});
 </script>
 <style lang="scss" scoped>
 .logo {

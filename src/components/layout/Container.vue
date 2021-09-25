@@ -7,6 +7,7 @@
           v-for="amenu in asideMenu"
           :key="amenu.path"
           :index="amenu.path"
+          @click="$router.push({ hash: `#${amenu.title}` })"
         >
           <i
             :class="`iconfont icon-${amenu.path}`"
@@ -25,10 +26,13 @@
 
 <script setup lang="ts">
 import { ElContainer, ElAside, ElMain, ElMenu, ElMenuItem } from "element-plus";
-import { computed, reactive, ref } from "@vue/runtime-core";
+import { computed } from "@vue/runtime-core";
 import { useStore } from "vuex";
 const store = useStore();
-const asideMenu = computed(() => store.state.asideMenu);
+const asideMenu = computed(() => {
+  console.log(store.state.asideMenu);
+  return store.state.asideMenu;
+});
 </script>
 <style lang="scss" scoped>
 .el-container {

@@ -2,7 +2,7 @@
 title: 详解http
 categories:
   - 前端
-  - 网络协议
+  - vue
 tags:
   - http
   - 请求方法
