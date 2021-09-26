@@ -7,10 +7,6 @@ const routes: Array<RouteRecordRaw> = [
     name: "articleList",
     component: ArticleList,
   },
-  {
-    path: "/*",
-    redirect: "/",
-  },
   ...docRoutes,
 ];
 const router = createRouter({
