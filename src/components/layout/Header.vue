@@ -10,6 +10,9 @@
         >{{ menu.title }}</el-menu-item
       >
     </el-menu>
+    <div class="func">
+      <i class="iconfont icon-edit" @click="$router.push('/edit')"></i>
+    </div>
   </el-header>
 </template>
 
@@ -98,8 +101,8 @@ watchEffect(() => {
 </script>
 <style lang="scss" scoped>
 .logo {
-  height: 40px;
   position: absolute;
+  height: 40px;
   left: 8px;
 }
 .el-header {
@@ -108,5 +111,13 @@ watchEffect(() => {
   z-index: 100;
   background-color: #fff;
   box-shadow: 0 3px 8px 6px rgba(7, 17, 27, 0.06);
+}
+.func {
+  position: absolute;
+  right: 24px;
+  .iconfont {
+    color: #000;
+    font-size: 24px;
+  }
 }
 </style>

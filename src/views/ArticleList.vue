@@ -23,7 +23,7 @@ watch(
   () => route.hash,
   (hash) =>
     (routes.value = routes.value?.filter((h) =>
-      (h.meta?.frontmatter as { categories: [] }).categories.some((c) =>
+      (h?.meta?.frontmatter as { categories: [] })?.categories?.some((c) =>
         RegExp(hash.slice(1), "i").test(c)
       )
     )),

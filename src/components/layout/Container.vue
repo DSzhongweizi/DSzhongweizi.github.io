@@ -29,29 +29,28 @@ import { ElContainer, ElAside, ElMain, ElMenu, ElMenuItem } from "element-plus";
 import { computed } from "@vue/runtime-core";
 import { useStore } from "vuex";
 const store = useStore();
-const asideMenu = computed(() => {
-  console.log(store.state.asideMenu);
-  return store.state.asideMenu;
-});
+const asideMenu = computed(() => store.state.asideMenu);
 </script>
 <style lang="scss" scoped>
 .el-container {
   position: relative;
   top: 60px;
-  height: auto;
+  height: calc(100% - 60px);
   .el-aside {
     position: fixed;
     height: 100%;
     background-color: #fff;
   }
   .el-main {
+    position: relative;
     background-color: #fff;
     opacity: 0.8;
     color: #000;
     max-width: 60%;
     overflow: hidden;
     margin: 0 auto;
-    min-height: min-content;
+    // min-height: min-content;
+    height: 100%;
     ::v-deep(.markdown-body) {
       text-align: left;
     }
