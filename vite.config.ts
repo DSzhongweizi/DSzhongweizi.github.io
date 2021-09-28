@@ -32,8 +32,8 @@ export default defineConfig({
         route.meta = Object.assign(route.meta || {}, {
           frontmatter: {
             ...mat?.data,
-            ctime: stat.birthtime, // 创建时间
-            atime: stat.mtime, // 更改时间
+            ctime: route.meta?.ctime || stat.birthtime, // 创建时间
+            atime: route.meta?.atime || stat.mtime, // 更改时间
           },
         });
         return route;

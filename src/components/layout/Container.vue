@@ -43,14 +43,8 @@ const asideMenu = computed(() => store.state.asideMenu);
   }
   .el-main {
     position: relative;
-    background-color: #fff;
     opacity: 0.8;
     color: #000;
-    max-width: 60%;
-    overflow: hidden;
-    margin: 0 auto;
-    // min-height: min-content;
-    height: 100%;
     ::v-deep(.markdown-body) {
       text-align: left;
     }

@@ -11,7 +11,7 @@
   <template v-else>
     <Header />
     <Container>
-      <router-view />
+      <div class="main-box"><router-view /></div>
     </Container>
   </template>
 </template>
@@ -57,5 +57,12 @@ body {
 }
 .el-aside {
   width: unset !important;
+}
+.main-box {
+  max-width: 60%;
+  background-color: #fff;
+  margin: 0 auto;
+  padding: 24px;
+  text-align: center;
 }
 </style>
