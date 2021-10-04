@@ -34,3 +34,5 @@ app
   .use(router.routes())
   .use(router.allowedMethods())
   .listen(8080);
+
+module.exports = app;
