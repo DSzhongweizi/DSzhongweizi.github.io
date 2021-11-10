@@ -17,7 +17,6 @@
 </template>
 
 <script setup lang="ts">
-import { ElHeader, ElMenu, ElMenuItem } from "element-plus";
 import { ref, reactive, watchEffect } from "@vue/runtime-core";
 import { useStore } from "vuex";
 import { useRoute } from "vue-router";

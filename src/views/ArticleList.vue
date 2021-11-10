@@ -8,7 +8,6 @@ import { watch, watchEffect, ref } from "@vue/runtime-core";
 import ArticleItem from "cp/ArticleItem.vue";
 import docRoutes from "virtual:generated-pages";
 import { RouteRecordRaw, useRoute } from "vue-router";
-import { ElEmpty } from "element-plus";
 const route = useRoute();
 const routes = ref<RouteRecordRaw[]>([]);
 // 监听路由变化

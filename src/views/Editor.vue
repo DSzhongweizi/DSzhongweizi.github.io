@@ -29,16 +29,8 @@
 import { reactive, ref } from "@vue/reactivity";
 import { inject, onMounted } from "@vue/runtime-core";
 import Vditor from "vditor";
-import {
-  ElButton,
-  ElInput,
-  ElDialog,
-  ElForm,
-  ElFormItem,
-  ElCascader,
-  ElMessage,
-} from "element-plus";
 import { useStore } from "vuex";
+import axios from "axios";
 const http: any = inject("$http");
 const mdEditor = ref<Vditor>();
 const dialogVisible = ref(false);
@@ -115,17 +107,18 @@ const confirm = () => {
     if (valid) {
       dialogVisible.value = false;
       if (mdEditor.value)
-        await http
-          .saveArticle({
-            params: {
-              title: meta.title,
-              dir: meta.category,
-              content: mdEditor.value.getValue(),
-            },
-          })
-          .then((res: any) =>
-            res.code == 200 ? ElMessage.success(res.msg) : ElMessage.error(res)
-          );
+        // 发送 POST 请求
+        axios({
+          method: "post",
+          url: "/api/save-article",
+          data: {
+            title: meta.title,
+            dir: meta.category,
+            content: mdEditor.value.getValue(),
+          },
+        }).then((res) => {
+          console.log(res);
+        });
     }
   });
 };

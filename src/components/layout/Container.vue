@@ -25,7 +25,6 @@
 </template>
 
 <script setup lang="ts">
-import { ElContainer, ElAside, ElMain, ElMenu, ElMenuItem } from "element-plus";
 import { computed } from "@vue/runtime-core";
 import { useStore } from "vuex";
 const store = useStore();

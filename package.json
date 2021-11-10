@@ -5,36 +5,39 @@
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
     "serve": "vite preview",
-    "vercel-build": "node server/app.js"
+    "vercel-build": "node ./build.js"
   },
   "dependencies": {
     "@vueuse/head": "^0.6.0",
-    "axios": "^0.21.4",
-    "element-plus": "1.1.0-beta.7",
+    "axios": "^0.24.0",
+    "element-plus": "1.2.0-beta.3",
     "fs-extra": "^10.0.0",
     "gray-matter": "^4.0.3",
-    "koa": "^2.13.3",
+    "koa": "^2.13.4",
     "koa-bodyparser": "^4.3.0",
     "koa-cors": "^0.0.16",
     "koa-router": "^10.1.1",
     "moment": "^2.29.1",
+    "mongodb": "^4.1.4",
+    "typescript": "^4.4.4",
+    "unplugin-vue-components": "^0.17.2",
     "vditor": "^3.8.7",
-    "vue": "^3.2.6",
+    "vue": "^3.2.21",
     "vue-router": "4.0.11",
     "vuex": "4.0.2"
   },
   "devDependencies": {
-    "@types/node": "^16.7.10",
-    "@vitejs/plugin-vue": "^1.6.0",
-    "@vue/compiler-sfc": "^3.2.6",
+    "@types/mongodb": "^4.0.7",
+    "@types/node": "^16.11.7",
+    "@vitejs/plugin-vue": "^1.9.4",
+    "@vue/compiler-sfc": "^3.2.21",
     "markdown-it-prism": "^2.2.1",
-    "sass": "^1.38.2",
-    "typescript": "^4.3.2",
-    "vite": "^2.5.2",
+    "sass": "^1.43.4",
+    "vite": "^2.6.14",
     "vite-plugin-element-plus": "^0.0.12",
-    "vite-plugin-md": "^0.11.1",
-    "vite-plugin-pages": "^0.18.1",
-    "vue-tsc": "^0.2.2"
+    "vite-plugin-md": "^0.11.4",
+    "vite-plugin-pages": "^0.18.2",
+    "vue-tsc": "^0.29.2"
   },
   "license": "ISC"
 }

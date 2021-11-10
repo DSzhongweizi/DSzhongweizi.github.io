@@ -1,4 +1,6 @@
 import { defineConfig } from "vite";
+import Components from 'unplugin-vue-components/vite'
+import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import vuePlugin from "@vitejs/plugin-vue";
 import { resolve } from "path";
 import fs from "fs-extra";
@@ -10,6 +12,7 @@ import prism from "markdown-it-prism";
 export default defineConfig({
   plugins: [
     vuePlugin({ include: [/\.vue$/, /\.md$/] }),
+    Components({ resolvers: [ElementPlusResolver()]}),
     elementPlusPlugin({ useSource: true }),
     markdownPlugin({ headEnabled: true, markdownItUses: [prism] }),
     pagesPlugin({
@@ -20,7 +23,6 @@ export default defineConfig({
       ],
       extensions: ["vue", "md"],
       extendRoute(route, parent) {
-        console.log(route);
         const path = resolve(__dirname, route.component.slice(1));
         const stat = fs.statSync(path);
         const mat = matter(fs.readFileSync(path, "utf-8"));
@@ -53,7 +55,7 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
       scss: {
-        additionalData: `$injectedColor: orange;`,
+        charset: false,
         // additionalData: `@use "./src/assets/scss/common.scss";`
       },
     },

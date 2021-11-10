@@ -1,11 +1,3 @@
-<!--
- * @Author: DS
- * @Date: 2021-08-13 23:57:13
- * @LastEditTime: 2021-08-23 00:14:27
- * @LastEditors: DS
- * @Description: desc
- * @FilePath: \myblog\src\App.vue
--->
 <template>
   <Index v-if="$route.path == '/'" />
   <template v-else>

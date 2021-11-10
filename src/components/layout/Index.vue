@@ -18,7 +18,7 @@
       <h2>中微子</h2>
     </router-link>
     <router-link to="/home">
-      <img src="/avatar.png" alt srcset />
+      <img src="/avatar.png" />
     </router-link>
     <div class="contact">
       <a v-for="v in contact" :key="v.name" :href="v.link" target="_blank">
