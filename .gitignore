@@ -1,8 +1,4 @@
+Dockerfile
+.dockerignore
 node_modules
-.DS_Store
-dist
-dist-ssr
-*.local
-docker/node_modules
-docker/Dockerfile
-docker/.dockerignore
+npm-debug.log
