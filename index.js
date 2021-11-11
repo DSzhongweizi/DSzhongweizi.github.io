@@ -1,9 +1,14 @@
 const express = require("express");
+const cloudbase = require("@cloudbase/node-sdk");
 const app = express();
-app.get("/", (req, res) => {
-  res.send(`Hello World!`);
+const db = cloudbase.init({ env: "blog" }).database();
+
+app.get("/save-article", (req, res) => {
+  db.collection("articles").add({ _openid: "luke-111111" }).then(result => {
+    res.send(result.id);
+  })
 });
-const port = 8080;
-app.listen(port, () => {
-  console.log(`helloworld: listening on port ${port}`);
-});
+app.listen(8080);
+
+
+
