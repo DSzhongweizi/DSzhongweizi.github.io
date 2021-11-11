@@ -3,6 +3,3 @@ node_modules
 dist
 dist-ssr
 *.local
-docker/node_modules
-docker/Dockerfile
-docker/.dockerignore
