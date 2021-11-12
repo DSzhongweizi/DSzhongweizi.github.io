@@ -10,6 +10,17 @@ import markdownPlugin from "vite-plugin-md";
 import pagesPlugin from "vite-plugin-pages";
 import prism from "markdown-it-prism";
 export default defineConfig({
+  server: {
+    proxy: {
+      // 选项写法
+      '/api': {
+        target: 'https://blog-1393931-1258987167.ap-shanghai.run.tcloudbase.com/',
+        changeOrigin: true,
+        secure: false,
+        rewrite: (path) => path.replace(/^\/api/, '')
+      },
+    }
+  },
   plugins: [
     vuePlugin({ include: [/\.vue$/, /\.md$/] }),
     Components({ resolvers: [ElementPlusResolver()]}),

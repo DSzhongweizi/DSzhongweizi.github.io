@@ -31,6 +31,7 @@ import { inject, onMounted } from "@vue/runtime-core";
 import Vditor from "vditor";
 import { useStore } from "vuex";
 import axios from "axios";
+import { getCurrentInstance } from "vue";
 const http: any = inject("$http");
 const mdEditor = ref<Vditor>();
 const dialogVisible = ref(false);
@@ -55,6 +56,8 @@ const rules = reactive({
     },
   ],
 });
+const proxy = getCurrentInstance()?.proxy
+proxy.$http.saveArticle()
 onMounted(() => {
   mdEditor.value = new Vditor("vditor", {
     placeholder: "请这里创作",
