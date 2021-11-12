@@ -10,6 +10,10 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@cloudbase/node-sdk": "^2.7.1",
-    "express": "^4.17.1"
+    "koa": "^2.13.4",
+    "koa-bodyparser": "^4.3.0",
+    "koa-cors": "^0.0.16",
+    "koa-router": "^10.1.1",
+    "moment": "^2.29.1"
   }
 }
