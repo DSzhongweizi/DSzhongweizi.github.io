@@ -12,10 +12,7 @@
 import Index from "cp/layout/Index.vue";
 import Header from "cp/layout/Header.vue";
 import Container from "cp/layout/Container.vue";
-import { getCurrentInstance, onMounted } from "vue-demi";
-const proxy = getCurrentInstance()?.proxy
-proxy.$http.saveArticle()
-// console.log(proxy?.$http);
+
 </script>
 
 <style lang="scss">

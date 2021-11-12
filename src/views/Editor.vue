@@ -56,8 +56,9 @@ const rules = reactive({
     },
   ],
 });
+
 const proxy = getCurrentInstance()?.proxy
-proxy.$http.saveArticle()
+
 onMounted(() => {
   mdEditor.value = new Vditor("vditor", {
     placeholder: "请这里创作",
@@ -110,18 +111,11 @@ const confirm = () => {
     if (valid) {
       dialogVisible.value = false;
       if (mdEditor.value)
-        // 发送 POST 请求
-        axios({
-          method: "post",
-          url: "/api/save-article",
-          data: {
+      proxy.$http.saveArticle({
             title: meta.title,
             dir: meta.category,
             content: mdEditor.value.getValue(),
-          },
-        }).then((res) => {
-          console.log(res);
-        });
+          }).then((res: any) => console.log(res))
     }
   });
 };
