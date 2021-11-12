@@ -1,4 +1,3 @@
-
 const cloudbase = require("@cloudbase/node-sdk");
 const Koa = require("koa");
 const Router = require("koa-router");
@@ -7,7 +6,12 @@ const bodyParser = require("koa-bodyparser");
 const moment = require("moment");
 const app = new Koa();
 const router = new Router();
-const db = cloudbase.init({ env: "blog-4gr30cdu25d98dfd" }).database()
+const db = cloudbase.init({ env: "blog-3g2xa95s63836ce2" }).database()
+
+exports.main = async (event, context) => {
+  return db.collection("todos").get();
+};
+
 
 router.post("/save-article", async (ctx, next) => {
   let res = { msg: "保存成功", code: 200 };
@@ -26,4 +30,4 @@ app
   .use(router.allowedMethods())
   .listen(8080);
 
-
+module.exports = app
