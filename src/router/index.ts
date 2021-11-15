@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
-import docRoutes from "virtual:generated-pages";
+// import docRoutes from "virtual:generated-pages";
 import ArticleList from "../views/ArticleList.vue";
 import Editor from "../views/Editor.vue";
 const routes: Array<RouteRecordRaw> = [
@@ -13,7 +13,7 @@ const routes: Array<RouteRecordRaw> = [
     name: "editor",
     component: Editor,
   },
-  ...docRoutes,
+  // ...docRoutes,
 ];
 const router = createRouter({
   history: createWebHistory(),

@@ -1,15 +1,28 @@
 <template>
-  <ArticleItem v-for="route in routes" :key="route.name" :articleItem="route" />
-  <el-empty v-if="!routes.length" description="正在努力创作中..."></el-empty>
+  <ArticleItem v-for="item in articles" :key="item.name" :articleItem="item" />
+  <el-empty v-if="!articles.length" description="正在努力创作中..."></el-empty>
 </template>
 
 <script setup lang="ts">
-import { watch, watchEffect, ref } from "@vue/runtime-core";
+import {
+  watch,
+  watchEffect,
+  ref,
+  onMounted,
+  getCurrentInstance,
+} from "@vue/runtime-core";
 import ArticleItem from "cp/ArticleItem.vue";
 import docRoutes from "virtual:generated-pages";
 import { RouteRecordRaw, useRoute } from "vue-router";
 const route = useRoute();
 const routes = ref<RouteRecordRaw[]>([]);
+const proxy = getCurrentInstance()?.proxy;
+const articles = ref([]);
+onMounted(async () => {
+  await proxy.$http
+    .queryArticle()
+    .then((res) => (articles.value = res.data.data));
+});
 // 监听路由变化
 watchEffect(
   () =>

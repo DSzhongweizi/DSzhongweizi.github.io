@@ -1,8 +1,8 @@
 <template>
   <div id="vditor"></div>
-  <el-button type="primary" @click="dialogVisible = true" class="save">
-    保存
-  </el-button>
+  <el-button type="primary" @click="dialogVisible = true" class="submit"
+    >提交</el-button
+  >
   <el-dialog title="文章元数据" v-model="dialogVisible" width="30%">
     <el-form ref="ruleForm" :model="meta" :rules="rules" label-width="80px">
       <el-form-item label="标题" label-width="4em" prop="title">
@@ -17,28 +17,56 @@
         ></el-cascader>
         <!-- <el-input v-model="meta.tags"></el-input> -->
       </el-form-item>
+      <el-form-item label="描述" label-width="4em" prop="desc">
+        <el-input
+          v-model="meta.desc"
+          autosize
+          rows="3"
+          type="textarea"
+          :placeholder="meta.desc"
+        />
+        <!-- <el-input v-model="meta.tags"></el-input> -->
+      </el-form-item>
     </el-form>
     <el-form-item>
       <el-button @click="dialogVisible = false">取 消</el-button>
-      <el-button type="primary" @click="confirm"> 确 定 </el-button>
+      <el-button type="primary" @click="submit('saved')" plain>保 存</el-button>
+      <el-button type="primary" @click="submit('released')">发 布</el-button>
     </el-form-item>
   </el-dialog>
 </template>
 
 <script setup lang="ts">
 import { reactive, ref } from "@vue/reactivity";
-import { inject, onMounted } from "@vue/runtime-core";
+import {
+  onMounted,
+  getCurrentInstance,
+  watchEffect,
+  watch,
+  computed,
+} from "@vue/runtime-core";
 import Vditor from "vditor";
 import { useStore } from "vuex";
-import axios from "axios";
-import { getCurrentInstance } from "vue";
-const http: any = inject("$http");
+import { useRoute } from "vue-router";
+import moment from "moment";
+const route = useRoute();
+const proxy = getCurrentInstance()?.proxy;
 const mdEditor = ref<Vditor>();
+const content = computed(() => mdEditor.value?.getValue());
+const props = defineProps<{
+  id: string;
+}>();
+// watch(content, (val) => console.log(val));
 const dialogVisible = ref(false);
 const store = useStore();
 const meta = reactive({
   title: "",
   category: "",
+  desc: computed(() =>
+    content.value?.slice(0, 100)
+      ? content.value?.slice(0, 100) + " ..."
+      : "阿斯顿飞过"
+  ),
 });
 const rules = reactive({
   title: [
@@ -56,15 +84,16 @@ const rules = reactive({
     },
   ],
 });
-
-const proxy = getCurrentInstance()?.proxy
-
-onMounted(() => {
+onMounted(async () => {
   mdEditor.value = new Vditor("vditor", {
     placeholder: "请这里创作",
     icon: "material",
     counter: {
       enable: true,
+    },
+    cache: {
+      enable: true,
+      id: "editing-article",
     },
     toolbar: [
       "emoji",
@@ -104,18 +133,46 @@ onMounted(() => {
       "br",
     ],
   });
+  // await proxy.$http.queryArticle({ _id: props.id }).then((res) => {
+  //   console.log(res);
+  //   mdEditor.value.setValue(res.data);
+  // });
+
+  console.log(mdEditor.value);
 });
 const ruleForm = ref();
-const confirm = () => {
+const submit = (op: string) => {
   ruleForm.value.validate(async (valid: any) => {
-    if (valid) {
-      dialogVisible.value = false;
-      if (mdEditor.value)
-      proxy.$http.saveArticle({
-            title: meta.title,
-            dir: meta.category,
-            content: mdEditor.value.getValue(),
-          }).then((res: any) => console.log(res))
+    if (valid && mdEditor.value) {
+      let result = Promise.resolve();
+
+      const data = Object.assign(
+        {
+          utime: moment().format("YYYY-MM-DD"),
+          status: op,
+          tags: [],
+          content,
+        },
+        meta
+      );
+      if (props.id) {
+        // 更新文章
+        result = await proxy.$http.updateArticle({
+          condition: props.id,
+          data,
+        });
+      } else {
+        // 新增文章
+        result = await proxy.$http.addArticle(
+          Object.assign({ ctime: moment().format("YYYY-MM-DD") }, data)
+        );
+      }
+      console.log(result);
+      // result.then((res) => {
+      //   res.status == 200 &&
+      //     ElMessage.success(op == "saved" ? "保存成功" : "发布成功");
+      //   dialogVisible.value = false;
+      // });
     }
   });
 };
@@ -132,7 +189,7 @@ const confirm = () => {
   width: 200px;
   left: -220px;
 }
-.el-button.save {
+.el-button.submit {
   position: absolute;
   z-index: 102;
   bottom: 2em;

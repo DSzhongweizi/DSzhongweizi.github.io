@@ -1,11 +1,13 @@
 import { defineConfig } from "vite";
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
+import ElementPlus from 'unplugin-element-plus/vite'
 import vuePlugin from "@vitejs/plugin-vue";
 import { resolve } from "path";
 import fs from "fs-extra";
 import matter from "gray-matter";
-import elementPlusPlugin from "vite-plugin-element-plus";
+// import elementPlusPlugin from "vite-plugin-element-plus";
+
 import markdownPlugin from "vite-plugin-md";
 import pagesPlugin from "vite-plugin-pages";
 import prism from "markdown-it-prism";
@@ -14,7 +16,7 @@ export default defineConfig({
     proxy: {
       // 选项写法
       '/api': {
-        target: 'https://blog-1393931-1258987167.ap-shanghai.run.tcloudbase.com/',
+        target: 'https://blog-3g2xa95s63836ce2-1258987167.ap-shanghai.app.tcloudbase.com/',
         changeOrigin: true,
         secure: false,
         rewrite: (path) => path.replace(/^\/api/, '')
@@ -24,7 +26,7 @@ export default defineConfig({
   plugins: [
     vuePlugin({ include: [/\.vue$/, /\.md$/] }),
     Components({ resolvers: [ElementPlusResolver()]}),
-    elementPlusPlugin({ useSource: true }),
+    ElementPlus({ useSource: true }),
     markdownPlugin({ headEnabled: true, markdownItUses: [prism] }),
     pagesPlugin({
       pagesDir: [

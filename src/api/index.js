@@ -1,6 +1,18 @@
 export default {
-  saveArticle: {
+  addArticle: {
     method: 'post',
-    url: '/save-article'
-  }
+    url: '/add-article'
+  },
+  deleteArticle: {
+    method: 'delete',
+    url: '/delete-article'
+  },
+  updateArticle: {
+    method: 'put',
+    url: '/update-article'
+  },
+  queryArticle: {
+    method: 'get',
+    url: '/query-article'
+  },
 }

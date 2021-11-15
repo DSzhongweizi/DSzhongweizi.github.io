@@ -7,12 +7,13 @@
       <i class="iconfont icon-category" v-if="matter?.categories"></i>
       <span v-for="c in matter?.categories" :key="c">{{ c }}</span>
     </div>
-    <p>{{ matter.desc }}</p>
+    <p>{{ matter?.desc }}</p>
   </div>
 </template>
 
 <script setup lang="ts">
 import moment from "moment";
+
 const props = defineProps({ articleItem: Object });
 const matter = props.articleItem?.meta?.frontmatter;
 const format = (d: string) => moment(d).utcOffset(0).format("YYYY-MM-DD");

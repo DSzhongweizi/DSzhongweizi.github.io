@@ -1,7 +1,11 @@
 <template>
   <el-header>
     <img src="/logo.png" class="logo" @click="$router.push('/')" />
-    <el-menu :default-active="currentActiveRoute" mode="horizontal">
+    <el-menu
+      :default-active="currentActiveRoute"
+      mode="horizontal"
+      :ellipsis="false"
+    >
       <el-menu-item
         v-for="menu in menus"
         :key="menu.path"
@@ -11,7 +15,7 @@
       >
     </el-menu>
     <div class="func">
-      <i class="iconfont icon-edit" @click="$router.push('/edit')"></i>
+      <i class="iconfont icon-edit" @click="handleClickEdit"></i>
     </div>
   </el-header>
 </template>
@@ -19,10 +23,15 @@
 <script setup lang="ts">
 import { ref, reactive, watchEffect } from "@vue/runtime-core";
 import { useStore } from "vuex";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 const store = useStore();
 const route = useRoute();
-const currentActiveRoute = ref("home");
+const router = useRouter();
+const currentActiveRoute = ref<string | undefined>("home");
+const handleClickEdit = () => {
+  router.push("/edit");
+  sessionStorage.setItem("edit-status", "create");
+};
 const menus = reactive([
   {
     path: "/home",
@@ -91,7 +100,9 @@ const menus = reactive([
 ]);
 
 watchEffect(() => {
-  currentActiveRoute.value = route.path;
+  currentActiveRoute.value = menus.find((cur) =>
+    new RegExp(cur.path).test(route.path)
+  )?.path;
   store.commit(
     "setAsideMenu",
     menus.find((cur) => cur.path == route.path)?.children

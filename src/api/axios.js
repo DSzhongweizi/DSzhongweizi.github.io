@@ -22,17 +22,16 @@ const http = {}
 // 统一api请求参数
 const format = (api, request) => {
   return async args => {
-    console.log('[ api ] >', api)
     switch (api.method) {
       case 'get': case 'delete':
-        /^[\/|\?]/.test(args) ? api.url + args : api.params = args;
+        /^[\/|\?]/.test(args) ? api.url += args : api.params = args;
         break;
       case 'post': case 'put': case 'patch':
         api.data = args
         break;
       default:
     }
-    await request(api)
+    return await request(api)
   }
 }
 Object.keys(apis).forEach(api => http[api] = format(apis[api], instance))
