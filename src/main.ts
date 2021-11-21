@@ -10,3 +10,9 @@ const head = createHead();
 app.use(head);
 app.config.globalProperties.$http = Http
 app.use(store).use(router).mount("#app");
+
+declare module '@vue/runtime-core' {
+  export interface ComponentCustomProperties {
+    $http: any
+  }
+}

@@ -8,12 +8,7 @@
   </template>
 </template>
 
-<script setup lang="ts">
-import Index from "cp/layout/Index.vue";
-import Header from "cp/layout/Header.vue";
-import Container from "cp/layout/Container.vue";
-
-</script>
+<script setup lang="ts"></script>
 
 <style lang="scss">
 html,

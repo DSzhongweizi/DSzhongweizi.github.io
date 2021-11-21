@@ -16,7 +16,7 @@ export default defineConfig({
     proxy: {
       // 选项写法
       '/api': {
-        target: 'https://blog-3g2xa95s63836ce2-1258987167.ap-shanghai.app.tcloudbase.com/',
+        target: 'http://localhost:3001/',
         changeOrigin: true,
         secure: false,
         rewrite: (path) => path.replace(/^\/api/, '')

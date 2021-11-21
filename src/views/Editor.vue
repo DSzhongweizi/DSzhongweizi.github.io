@@ -37,20 +37,23 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, ref } from "@vue/reactivity";
+import { reactive, ref } from '@vue/reactivity';
 import {
   onMounted,
   getCurrentInstance,
   watchEffect,
   watch,
   computed,
-} from "@vue/runtime-core";
-import Vditor from "vditor";
-import { useStore } from "vuex";
-import { useRoute } from "vue-router";
-import moment from "moment";
+} from '@vue/runtime-core';
+import Vditor from 'vditor';
+import { useStore } from 'vuex';
+import { useRoute } from 'vue-router';
+import moment from 'moment';
+import { ElMessage } from 'element-plus';
+import { ComponentInternalInstance } from 'vue';
 const route = useRoute();
-const proxy = getCurrentInstance()?.proxy;
+const { appContext } = getCurrentInstance() as ComponentInternalInstance
+const { proxy } = appContext.config.globalProperties;
 const mdEditor = ref<Vditor>();
 const content = computed(() => mdEditor.value?.getValue());
 const props = defineProps<{
@@ -60,77 +63,73 @@ const props = defineProps<{
 const dialogVisible = ref(false);
 const store = useStore();
 const meta = reactive({
-  title: "",
-  category: "",
-  desc: computed(() =>
-    content.value?.slice(0, 100)
-      ? content.value?.slice(0, 100) + " ..."
-      : "阿斯顿飞过"
-  ),
+  title: '',
+  category: '',
+  desc: '',
 });
 const rules = reactive({
   title: [
     {
       required: true,
-      message: "文章标题不能为空",
-      trigger: "blur",
+      message: '文章标题不能为空',
+      trigger: 'blur',
     },
   ],
   category: [
     {
       required: true,
-      message: "文章类别不能为空",
-      trigger: "blur",
+      message: '文章类别不能为空',
+      trigger: 'blur',
     },
   ],
 });
 onMounted(async () => {
-  mdEditor.value = new Vditor("vditor", {
-    placeholder: "请这里创作",
-    icon: "material",
+  mdEditor.value = new Vditor('vditor', {
+    placeholder: '请这里创作',
+    icon: 'material',
     counter: {
       enable: true,
     },
     cache: {
       enable: true,
-      id: "editing-article",
+      id: 'editing-article',
     },
     toolbar: [
-      "emoji",
-      "headings",
-      "bold",
-      "italic",
-      "strike",
-      "|",
-      "line",
-      "quote",
-      "list",
-      "ordered-list",
-      "check",
-      "outdent",
-      "indent",
-      "code",
-      "inline-code",
-      "insert-after",
-      "insert-before",
-      "undo",
-      "redo",
-      "upload",
-      "link",
-      "table",
-      "record",
-      "edit-mode",
-      "both",
-      "preview",
-      "outline",
-      "fullscreen",
-      "code-theme",
-      "content-theme",
-      "export",
-      "devtools",
-      "info",
-      "help",
-      "br",
+      'emoji',
+      'headings',
+      'bold',
+      'italic',
+      'strike',
+      '|',
+      'line',
+      'quote',
+      'list',
+      'ordered-list',
+      'check',
+      'outdent',
+      'indent',
+      'code',
+      'inline-code',
+      'insert-after',
+      'insert-before',
+      'undo',
+      'redo',
+      'upload',
+      'link',
+      'table',
+      'record',
+      'edit-mode',
+      'both',
+      'preview',
+      'outline',
+      'fullscreen',
+      'code-theme',
+      'content-theme',
+      'export',
+      'devtools',
+      'info',
+      'help',
+      'br',
     ],
   });
   // await proxy.$http.queryArticle({ _id: props.id }).then((res) => {
@@ -138,41 +137,36 @@ onMounted(async () => {
   //   mdEditor.value.setValue(res.data);
   // });
 
-  console.log(mdEditor.value);
+  // console.log(mdEditor.value);
 });
 const ruleForm = ref();
 const submit = (op: string) => {
   ruleForm.value.validate(async (valid: any) => {
     if (valid && mdEditor.value) {
-      let result = Promise.resolve();
-
       const data = Object.assign(
         {
-          utime: moment().format("YYYY-MM-DD"),
           status: op,
           tags: [],
-          content,
+          content: content.value,
         },
         meta
       );
       if (props.id) {
         // 更新文章
-        result = await proxy.$http.updateArticle({
-          condition: props.id,
-          data,
-        });
+        await proxy.$http
+          .updateArticle({
+            condition: props.id,
+            data,
+          })
+          .then((res: any) => console.log(res));
       } else {
         // 新增文章
-        result = await proxy.$http.addArticle(
-          Object.assign({ ctime: moment().format("YYYY-MM-DD") }, data)
-        );
+        await proxy.$http.addArticle(data).then((res: any) => {
+          res.status == 200 &&
+            ElMessage.success(op == 'saved' ? '保存成功' : '发布成功');
+          dialogVisible.value = false;
+        });
       }
-      console.log(result);
-      // result.then((res) => {
-      //   res.status == 200 &&
-      //     ElMessage.success(op == "saved" ? "保存成功" : "发布成功");
-      //   dialogVisible.value = false;
-      // });
     }
   });
 };
